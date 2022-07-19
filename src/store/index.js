@@ -1,4 +1,7 @@
 import { createStore } from 'vuex'
+import createPersistedstate from 'vuex-persistedstate'
+import cart from './modules/cart'
+import user from './modules/user'
 
 export default createStore({
   state: {
@@ -10,5 +13,10 @@ export default createStore({
   actions: {
   },
   modules: {
-  }
+    cart, user
+  },
+  plugins: [createPersistedstate({
+    key: 'rabbit',
+    path: ['user', 'cart']
+  })]
 })
