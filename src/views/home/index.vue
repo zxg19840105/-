@@ -1,7 +1,5 @@
 <template>
-  <div class='xtx-home-page'>
-    首页
-  </div>
+  <div class="xtx-home-page">首页</div>
 </template>
 
 <script>
@@ -10,6 +8,8 @@ export default {
 }
 </script>
 
-<style scoped lang='less'>
- @import '~@/styles/variables.less';
+<style scoped lang="less">
+div {
+  color: @warnColor;
+}
 </style>

@@ -4,9 +4,7 @@ const routes = [
   {
     path: '/',
     component: () => import('@/views/layout'),
-    children: [
-      { path: '/', component: () => import('@/views/home') }
-    ]
+    children: [{ path: '/', component: () => import('@/views/home') }]
   }
 ]
 

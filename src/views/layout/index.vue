@@ -1,6 +1,7 @@
 <template>
-  <nav>顶部通栏</nav>
-  <header>头部</header>
+  <!-- 顶部通栏 -->
+  <top-nav></top-nav>
+  <top-header>头部</top-header>
   <main>
     <!-- 二级路由出口 -->
     <router-view></router-view>
@@ -9,9 +10,15 @@
 </template>
 
 <script>
+import topNav from './components/topnav.vue'
+import topHeader from './components/header.vue'
 export default {
-  name: 'xtx-layout'
+  name: 'xtx-layout',
+  components: {
+    topNav,
+    topHeader
+  }
 }
 </script>
 
-<style scoped lang='less'></style>
+<style scoped lang="less"></style>
