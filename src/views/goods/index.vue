@@ -29,14 +29,22 @@
         <div class="spec">
           <!-- 信息组件 -->
           <GoodsName />
+          <!-- 新增 sku -->
+          <GoodsSku :goods="goods" @change="getSku" />
+          <!-- 商品数量 -->
+          <XtxNumbox :max="goods.inventory" v-model="buyNum"></XtxNumbox>
+          <button @click="add">加入购物车</button>
         </div>
       </div>
-
       <div class="goods-footer">
         <div class="goods-article">
           <div class="goods-tabs">
             <!-- 详情图片列表 -->
-            <img v-for="(item,index) in goods.details.pictures" :Key="index" :src="item"/>
+            <img
+              v-for="(item, index) in goods.details.pictures"
+              :Key="index"
+              :src="item"
+            />
           </div>
         </div>
         <div class="goods-aside"></div>
@@ -52,11 +60,14 @@ import { useRoute } from 'vue-router'
 import GoodsImage from './components/goods-image.vue'
 import GoodsSales from './components/goods-sales'
 import GoodsName from './components/goods-name'
+import { useStore } from 'vuex'
 export default {
   name: 'XtxGoodsPage',
   components: { GoodsImage, GoodsSales, GoodsName },
   setup () {
     const goods = ref({})
+    const skuGood = ref({})
+    const store = useStore()
     provide('goods', goods)
     const route = useRoute()
     const getList = async () => {
@@ -64,9 +75,47 @@ export default {
       goods.value = result
     }
     getList()
+    // 获取sku数据
+    const getSku = (sku) => {
+      console.log('sku:', sku)
+      // 修改商品的现价原价库存信息
+      if (sku.skuId) {
+        goods.value.price = sku.price
+        goods.value.oldPrice = sku.oldPrice
+        goods.value.inventory = sku.inventory
+      }
+      skuGood.value = sku
+    }
+    const buyNum = ref(1)
+    const add = async () => {
+      if (!skuGood.value.specsText) {
+        return alert('请选择商品规格')
+      }
+      if (skuGood.value.inventory === 0) {
+        return alert('商品没有库存')
+      }
+      const addDetail = {
+        id: goods.value.id,
+        name: goods.value.name,
+        picture: goods.value.mainPictures[0],
+        skuId: skuGood.value.skuId,
+        price: skuGood.value.oldPrice,
+        nowPrice: skuGood.value.price,
+        attrsText: skuGood.value.specsText,
+        stock: skuGood.value.inventory,
+        selected: true,
+        isEffective: true,
+        count: buyNum.value
+      }
+      try {
+        const msg = await store.dispatch('cart/addLogin', addDetail)
+        console.log(msg)
+      } catch (error) {
 
+      }
+    }
     return {
-      goods
+      goods, getSku, buyNum, add
     }
   }
 }

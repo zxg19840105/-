@@ -1,5 +1,4 @@
 <template>
-<input type="text" v-test="123">
   <div class="page-home">
     <div class="home-entry">
       <div class="container">

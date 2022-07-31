@@ -4,12 +4,12 @@
       <ul>
         <template v-if="profile.token">
           <li>
-            <a href="javascript:;"><i class="iconfont icon-user"></i>周杰伦</a>
+            <a href="javascript:;"><i class="iconfont icon-user"></i>{{profile.account || profile.nickname}}</a>
           </li>
-          <li><a href="javascript:;">退出登录</a></li>
+          <li><a href="javascript:;" @click="quit">退出登录</a></li>
         </template>
         <template v-else>
-          <li><a href="javascript:;">请先登录</a></li>
+          <li><RouterLink to="/login">请先登录</RouterLink></li>
           <li><a href="javascript:;">免费注册</a></li>
         </template>
         <li><a href="javascript:;">我的订单</a></li>
@@ -24,11 +24,23 @@
   </nav>
 </template>
 <script>
-import { mapState } from 'vuex'
+import { useRouter } from 'vue-router'
+import { mapState, useStore } from 'vuex'
 export default {
   name: 'AppTopnav',
   computed: {
     ...mapState('user', ['profile'])
+  },
+  setup () {
+    const store = useStore()
+    const router = useRouter()
+    const quit = () => {
+      store.commit('user/delProfile')
+      router.replace('/login')
+    }
+    return {
+      quit
+    }
   }
 }
 </script>

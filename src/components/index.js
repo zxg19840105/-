@@ -4,7 +4,10 @@ import more from './More/index.vue'
 import bread from './Bread/index.vue'
 import breadItem from './Bread/item.vue'
 import city from './City/index.vue'
-const arr = [skeleton, slider, more, bread, breadItem, city]
+import sku from './Sku/index.vue'
+import numBox from './Numbox/index.vue'
+import checkBox from './CheckBox/index.vue'
+const arr = [skeleton, slider, more, bread, breadItem, city, sku, numBox, checkBox]
 export default {
   install (app) {
     arr.forEach(item => {

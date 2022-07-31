@@ -24,6 +24,7 @@ instance.interceptors.response.use(
   (res) => res.data,
   (e) => {
     if (e.response && e.response.status === 401) {
+      store.commit('user/delProfile')
       // encodeURIComponent 转换uri编码，防止解析地址出问题
       const redirectUrl = encodeURIComponent(
         router.currentRoute.value.fullPath

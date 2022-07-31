@@ -25,6 +25,7 @@ export default {
     // 其它
     meng: Object // 更新使用=》emit('update:meng', newVal)
   },
+  emits: ['change', 'update:modelValue'],
   setup (props, { emit }) {
     console.log('v-models:', props)
     const checked = ref(false)
